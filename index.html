@@ -3,14 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta
-    name="description"
-    content="Oferta académica de los Profesorados en Educación Inicial y Educación Primaria de Córdoba."
-  >
+  <meta name="description" content="Oferta académica de los Profesorados en Educación Inicial y Educación Primaria de Córdoba.">
   <meta name="theme-color" content="#173b59">
-
   <title>Profesorados · Educación Superior Córdoba</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -18,67 +13,57 @@
 
   <div class="site">
 
-    <div class="topbar"></div>
+    <header class="site-header" id="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="#top" aria-label="Educación Superior Córdoba - Inicio">
+          <img
+            class="brand-logo"
+            src="Logo-A-Carbo-Blanco1-1711x1900.png"
+            alt="Logo institucional Escuela Normal Superior Dr. Alejandro Carbó"
+          >
+          <span class="brand-copy">
+            <span class="brand-overline">Educación Superior</span>
+            <span class="brand-title">Córdoba</span>
+          </span>
+        </a>
 
-    <header class="hero">
-      <div class="wrap hero-inner">
-
-        <div class="eyebrow">
-          Educación Superior · Córdoba
+        <div class="header-label">
+          Oferta académica
         </div>
-
-        <h1>
-          Dos profesorados.<br>
-          Una formación integral.
-        </h1>
-
-        <p class="hero-copy">
-          Conocé la propuesta académica de los Profesorados en Educación Inicial
-          y Educación Primaria, organizada por año y presentada de manera clara
-          para orientar el recorrido formativo.
-        </p>
-
       </div>
     </header>
 
+    <div class="topbar" id="top"></div>
+
     <main>
 
-      <section
-        class="section"
-        id="oferta"
-        aria-labelledby="section-title"
-      >
+      <section class="hero">
+        <div class="wrap hero-inner">
+          <div class="eyebrow">Profesorados · Formación docente</div>
+          <h1>Dos profesorados.<br>Una formación integral.</h1>
+          <p class="hero-copy">
+            Conocé la propuesta académica de los Profesorados en Educación Inicial
+            y Educación Primaria, organizada por año y presentada de manera clara
+            para orientar el recorrido formativo.
+          </p>
+        </div>
+      </section>
 
+      <section class="section" id="oferta" aria-labelledby="section-title">
         <div class="wrap">
 
           <div class="section-head">
-
             <div>
-
-              <div class="eyebrow">
-                Oferta formativa
-              </div>
-
-              <h2 id="section-title">
-                Elegí tu profesorado
-              </h2>
-
+              <div class="eyebrow">Oferta formativa</div>
+              <h2 id="section-title">Elegí tu profesorado</h2>
             </div>
-
             <p>
               Seleccioná una carrera para consultar su plan de estudios.
               Solo se muestra un profesorado por vez.
             </p>
-
           </div>
 
-
-          <!-- SELECTOR DE CARRERAS -->
-
-          <div
-            class="selector-grid"
-            aria-label="Selección de profesorado"
-          >
+          <div class="selector-grid" aria-label="Selección de profesorado">
 
             <button
               class="selector-card"
@@ -87,26 +72,11 @@
               aria-controls="program-inicial"
               aria-expanded="false"
             >
-
-              <span class="selector-kicker">
-                Profesorado
-              </span>
-
-              <h3>
-                Educación Inicial
-              </h3>
-
-              <p>
-                Formación docente para el Nivel Inicial,
-                organizada en cuatro años.
-              </p>
-
-              <span class="selector-action">
-                Consultar plan
-              </span>
-
+              <span class="selector-kicker">Profesorado</span>
+              <h3>Educación Inicial</h3>
+              <p>Formación docente para el Nivel Inicial, organizada en cuatro años.</p>
+              <span class="selector-action">Consultar plan</span>
             </button>
-
 
             <button
               class="selector-card"
@@ -115,794 +85,269 @@
               aria-controls="program-primaria"
               aria-expanded="false"
             >
-
-              <span class="selector-kicker">
-                Profesorado
-              </span>
-
-              <h3>
-                Educación Primaria
-              </h3>
-
-              <p>
-                Formación docente para el Nivel Primario,
-                organizada en cuatro años.
-              </p>
-
-              <span class="selector-action">
-                Consultar plan
-              </span>
-
+              <span class="selector-kicker">Profesorado</span>
+              <h3>Educación Primaria</h3>
+              <p>Formación docente para el Nivel Primario, organizada en cuatro años.</p>
+              <span class="selector-action">Consultar plan</span>
             </button>
 
           </div>
 
+          <div class="programs" aria-live="polite">
 
-          <!-- PROGRAMAS -->
-
-          <div
-            class="programs"
-            aria-live="polite"
-          >
-
-
-            <!-- ====================================== -->
-            <!-- EDUCACIÓN INICIAL -->
-            <!-- ====================================== -->
-
-            <article
-              class="program"
-              id="program-inicial"
-              aria-labelledby="title-inicial"
-            >
-
+            <!-- =============================== -->
+            <!-- EDUCACIÓN INICIAL               -->
+            <!-- =============================== -->
+            <article class="program" id="program-inicial" aria-labelledby="title-inicial">
               <div class="program-panel">
 
                 <div class="program-header">
-
                   <div class="program-actions">
-
-                    <button
-                      class="btn"
-                      type="button"
-                      data-action="back"
-                    >
-                      ← Volver a carreras
+                    <button class="btn" type="button" data-action="back">← Volver a carreras</button>
+                    <button class="btn primary" type="button" data-action="download" data-career="inicial">
+                      Descargar plan PDF
                     </button>
-
-                    <button
-                      class="btn primary"
-                      type="button"
-                      data-action="print"
-                    >
-                      Imprimir plan
-                    </button>
-
                   </div>
 
-                  <div class="program-kicker">
-                    Profesorado
-                  </div>
-
-                  <h3 id="title-inicial">
-                    Educación Inicial
-                  </h3>
-
+                  <div class="program-kicker">Profesorado</div>
+                  <h3 id="title-inicial">Educación Inicial</h3>
                   <p class="program-intro">
-                    Plan de estudios organizado en cuatro años
-                    de formación docente.
+                    Plan de estudios organizado en cuatro años de formación docente.
                   </p>
-
                 </div>
-
 
                 <div class="years">
 
-
-                  <!-- AÑO 1 -->
-
                   <details open>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          01
-                        </span>
-
-                        1.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">01</span>1.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Pedagogía
-                        </li>
-
-                        <li>
-                          Problemáticas Socio antropológicas de la
-                          Educación Argentina en el Mundo Contemporáneo
-                        </li>
-
-                        <li>
-                          Lenguaje Digital y Audiovisual
-                        </li>
-
-                        <li>
-                          Lenguaje Corporal
-                        </li>
-
-                        <li>
-                          Práctica Docente I
-                        </li>
-
-                        <li>
-                          Educación Inicial: Jardín Maternal
-                          Oralidad, Lectura y Escritura
-                        </li>
-
-                        <li>
-                          Educación Artística: Música
-                        </li>
-
-                        <li>
-                          Seminario Alfabetización en Lengua Inglesa
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Pedagogía</li>
+                      <li>Problemáticas Socio antropológicas de la Educación Argentina en el Mundo Contemporáneo</li>
+                      <li>Lenguaje Digital y Audiovisual</li>
+                      <li>Lenguaje Corporal</li>
+                      <li>Práctica Docente I</li>
+                      <li>Educación Inicial: Jardín Maternal Oralidad, Lectura y Escritura</li>
+                      <li>Educación Artística: Música</li>
+                      <li>Seminario Alfabetización en Lengua Inglesa</li>
+                    </ul></div>
                   </details>
 
-
-                  <!-- AÑO 2 -->
-
                   <details>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          02
-                        </span>
-
-                        2.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">02</span>2.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Filosofía y Educación
-                        </li>
-
-                        <li>
-                          Didáctica General
-                        </li>
-
-                        <li>
-                          Práctica Docente II
-                        </li>
-
-                        <li>
-                          Desarrollo del Pensamiento Matemático
-                        </li>
-
-                        <li>
-                          Lengua: Lengua y su Didáctica
-                          (1.º semestre)
-                        </li>
-
-                        <li>
-                          Lengua: Alfabetización Inicial
-                          (2.º semestre)
-                        </li>
-
-                        <li>
-                          Ciencias Naturales y su Didáctica
-                        </li>
-
-                        <li>
-                          Sujetos de la Educación y Convivencia Escolar
-                        </li>
-
-                        <li>
-                          Educación Artística: Plástica
-                        </li>
-
-                        <li>
-                          TIC y la Enseñanza en el Nivel Inicial
-                        </li>
-
-                        <li>
-                          Diseño y Construcción de Materiales Didácticos
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Filosofía y Educación</li>
+                      <li>Didáctica General</li>
+                      <li>Práctica Docente II</li>
+                      <li>Desarrollo del Pensamiento Matemático</li>
+                      <li>Lengua: Lengua y su Didáctica (1.º semestre)</li>
+                      <li>Lengua: Alfabetización Inicial (2.º semestre)</li>
+                      <li>Ciencias Naturales y su Didáctica</li>
+                      <li>Sujetos de la Educación y Convivencia Escolar</li>
+                      <li>Educación Artística: Plástica</li>
+                      <li>TIC y la Enseñanza en el Nivel Inicial</li>
+                      <li>Diseño y Construcción de Materiales Didácticos</li>
+                    </ul></div>
                   </details>
 
-
-                  <!-- AÑO 3 -->
-
                   <details>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          03
-                        </span>
-
-                        3.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">03</span>3.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Historia y Política de la Educación Argentina
-                        </li>
-
-                        <li>
-                          Práctica Docente III
-                        </li>
-
-                        <li>
-                          Matemática y su Didáctica
-                        </li>
-
-                        <li>
-                          Literatura en el Nivel Inicial
-                        </li>
-
-                        <li>
-                          Ciencias Sociales y su Didáctica
-                        </li>
-
-                        <li>
-                          Ciencias Naturales: Educación para la Salud
-                          (1.º semestre)
-                        </li>
-
-                        <li>
-                          Ciencias Naturales: Educación Ambiental
-                          (2.º semestre)
-                        </li>
-
-                        <li>
-                          Educación Física en Jardín Maternal
-                          y Jardín Inicial
-                        </li>
-
-                        <li>
-                          Seminario I
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Historia y Política de la Educación Argentina</li>
+                      <li>Práctica Docente III</li>
+                      <li>Matemática y su Didáctica</li>
+                      <li>Literatura en el Nivel Inicial</li>
+                      <li>Ciencias Sociales y su Didáctica</li>
+                      <li>Ciencias Naturales: Educación para la Salud (1.º semestre)</li>
+                      <li>Ciencias Naturales: Educación Ambiental (2.º semestre)</li>
+                      <li>Educación Física en Jardín Maternal y Jardín Inicial</li>
+                      <li>Seminario I</li>
+                    </ul></div>
                   </details>
 
-
-                  <!-- AÑO 4 -->
-
                   <details>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          04
-                        </span>
-
-                        4.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">04</span>4.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Ética y Construcción de Ciudadanía
-                        </li>
-
-                        <li>
-                          Práctica IV y Residencia
-                        </li>
-
-                        <li>
-                          Problemáticas y Desafíos del Nivel Inicial:
-                          JM y JI
-                        </li>
-
-                        <li>
-                          Educación Artística: Teatro
-                        </li>
-
-                        <li>
-                          Educación Sexual Integral
-                        </li>
-
-                        <li>
-                          Seminario II
-                        </li>
-
-                        <li>
-                          Trabajo de Campo
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Ética y Construcción de Ciudadanía</li>
+                      <li>Práctica IV y Residencia</li>
+                      <li>Problemáticas y Desafíos del Nivel Inicial: JM y JI</li>
+                      <li>Educación Artística: Teatro</li>
+                      <li>Educación Sexual Integral</li>
+                      <li>Seminario II</li>
+                      <li>Trabajo de Campo</li>
+                    </ul></div>
                   </details>
 
                 </div>
-
 
                 <div class="program-meta">
-
                   <div class="program-note">
-
-                    <strong>
-                      Marco normativo
-                    </strong>
-
+                    <strong>Marco normativo</strong>
                     <span>
-                      Resolución Ministerial Provincial N.º
-                      1228/14/979/14. Con validez nacional otorgado
-                      por Resolución del Ministerio de Educación
-                      de la Nación N.º 671/2017.
+                      Resolución Ministerial Provincial N.º 1228/14/979/14. Con validez nacional
+                      otorgado por Resolución del Ministerio de Educación de la Nación N.º 671/2017.
                     </span>
-
                   </div>
-
                 </div>
-
               </div>
-
             </article>
 
-
-            <!-- ====================================== -->
-            <!-- EDUCACIÓN PRIMARIA -->
-            <!-- ====================================== -->
-
-            <article
-              class="program"
-              id="program-primaria"
-              aria-labelledby="title-primaria"
-            >
-
+            <!-- =============================== -->
+            <!-- EDUCACIÓN PRIMARIA              -->
+            <!-- =============================== -->
+            <article class="program" id="program-primaria" aria-labelledby="title-primaria">
               <div class="program-panel">
 
                 <div class="program-header">
-
                   <div class="program-actions">
-
-                    <button
-                      class="btn"
-                      type="button"
-                      data-action="back"
-                    >
-                      ← Volver a carreras
+                    <button class="btn" type="button" data-action="back">← Volver a carreras</button>
+                    <button class="btn primary" type="button" data-action="download" data-career="primaria">
+                      Descargar plan PDF
                     </button>
-
-                    <button
-                      class="btn primary"
-                      type="button"
-                      data-action="print"
-                    >
-                      Imprimir plan
-                    </button>
-
                   </div>
 
-                  <div class="program-kicker">
-                    Profesorado
-                  </div>
-
-                  <h3 id="title-primaria">
-                    Educación Primaria
-                  </h3>
-
+                  <div class="program-kicker">Profesorado</div>
+                  <h3 id="title-primaria">Educación Primaria</h3>
                   <p class="program-intro">
-                    Plan de estudios estructurado en cuatro años
-                    de formación docente.
+                    Plan de estudios estructurado en cuatro años de formación docente.
                   </p>
-
                 </div>
-
 
                 <div class="years">
 
-
-                  <!-- AÑO 1 -->
-
                   <details open>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          01
-                        </span>
-
-                        1.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">01</span>1.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Pedagogía
-                        </li>
-
-                        <li>
-                          Problemáticas Socioantropológicas en Educación
-                        </li>
-
-                        <li>
-                          Psicología y Educación
-                        </li>
-
-                        <li>
-                          Argentina en el Mundo Contemporáneo
-                        </li>
-
-                        <li>
-                          Lenguaje Digital y Audiovisual
-                        </li>
-
-                        <li>
-                          Lenguaje Corporal
-                        </li>
-
-                        <li>
-                          Práctica Docente I
-                        </li>
-
-                        <li>
-                          Desarrollo del Pensamiento Matemático
-                        </li>
-
-                        <li>
-                          Oralidad, Lectura y Escritura
-                        </li>
-
-                        <li>
-                          Seminario de Alfabetización en Lengua Inglesa
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Pedagogía</li>
+                      <li>Problemáticas Socioantropológicas en Educación</li>
+                      <li>Psicología y Educación</li>
+                      <li>Argentina en el Mundo Contemporáneo</li>
+                      <li>Lenguaje Digital y Audiovisual</li>
+                      <li>Lenguaje Corporal</li>
+                      <li>Práctica Docente I</li>
+                      <li>Desarrollo del Pensamiento Matemático</li>
+                      <li>Oralidad, Lectura y Escritura</li>
+                      <li>Seminario de Alfabetización en Lengua Inglesa</li>
+                    </ul></div>
                   </details>
 
-
-                  <!-- AÑO 2 -->
-
                   <details>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          02
-                        </span>
-
-                        2.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">02</span>2.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Filosofía y Educación
-                        </li>
-
-                        <li>
-                          Didáctica General
-                        </li>
-
-                        <li>
-                          Lenguaje Artístico Expresivo
-                        </li>
-
-                        <li>
-                          Práctica Docente II
-                        </li>
-
-                        <li>
-                          Matemática y su Didáctica I
-                        </li>
-
-                        <li>
-                          Lengua y su Didáctica
-                        </li>
-
-                        <li>
-                          Ciencias Naturales y su Didáctica I
-                        </li>
-
-                        <li>
-                          Ciencias Sociales y su Didáctica I
-                        </li>
-
-                        <li>
-                          Sujetos de la Educación y Convivencia Escolar
-                        </li>
-
-                        <li>
-                          Seminario I: Alfabetización en Lengua Inglesa
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Filosofía y Educación</li>
+                      <li>Didáctica General</li>
+                      <li>Lenguaje Artístico Expresivo</li>
+                      <li>Práctica Docente II</li>
+                      <li>Matemática y su Didáctica I</li>
+                      <li>Lengua y su Didáctica</li>
+                      <li>Ciencias Naturales y su Didáctica I</li>
+                      <li>Ciencias Sociales y su Didáctica I</li>
+                      <li>Sujetos de la Educación y Convivencia Escolar</li>
+                      <li>Seminario I: Alfabetización en Lengua Inglesa</li>
+                    </ul></div>
                   </details>
 
-
-                  <!-- AÑO 3 -->
-
                   <details>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          03
-                        </span>
-
-                        3.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">03</span>3.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Historia y Política de la Educación Argentina
-                        </li>
-
-                        <li>
-                          Práctica Docente III
-                        </li>
-
-                        <li>
-                          Matemática y su Didáctica II
-                        </li>
-
-                        <li>
-                          Literatura en el Nivel Primario
-                        </li>
-
-                        <li>
-                          Alfabetización Inicial
-                        </li>
-
-                        <li>
-                          Ciencias Naturales y su Didáctica II
-                        </li>
-
-                        <li>
-                          Taller de Ciencias en la Escuela
-                        </li>
-
-                        <li>
-                          Ciencias Sociales y su Didáctica II
-                        </li>
-
-                        <li>
-                          Educación Artística Expresiva
-                        </li>
-
-                        <li>
-                          TIC y su Enseñanza en el Nivel Primario
-                        </li>
-
-                        <li>
-                          Seminario II: Alfabetización en Lengua Inglesa
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Historia y Política de la Educación Argentina</li>
+                      <li>Práctica Docente III</li>
+                      <li>Matemática y su Didáctica II</li>
+                      <li>Literatura en el Nivel Primario</li>
+                      <li>Alfabetización Inicial</li>
+                      <li>Ciencias Naturales y su Didáctica II</li>
+                      <li>Taller de Ciencias en la Escuela</li>
+                      <li>Ciencias Sociales y su Didáctica II</li>
+                      <li>Educación Artística Expresiva</li>
+                      <li>TIC y su Enseñanza en el Nivel Primario</li>
+                      <li>Seminario II: Alfabetización en Lengua Inglesa</li>
+                    </ul></div>
                   </details>
 
-
-                  <!-- AÑO 4 -->
-
                   <details>
-
                     <summary>
-
-                      <span class="summary-left">
-
-                        <span class="year-badge">
-                          04
-                        </span>
-
-                        4.º año
-
-                      </span>
-
-                      <span class="chevron">
-                        ⌄
-                      </span>
-
+                      <span class="summary-left"><span class="year-badge">04</span>4.º año</span>
+                      <span class="chevron">⌄</span>
                     </summary>
-
-                    <div class="subjects">
-
-                      <ul>
-
-                        <li>
-                          Ética y Construcción de Ciudadanía
-                        </li>
-
-                        <li>
-                          Práctica IV y Residencia
-                        </li>
-
-                        <li>
-                          Problemáticas y Desafíos del Nivel Primario
-                        </li>
-
-                        <li>
-                          Educación Física en el Nivel Primario
-                        </li>
-
-                        <li>
-                          Educación Sexual Integral
-                        </li>
-
-                        <li>
-                          Trabajo de Campo
-                        </li>
-
-                        <li>
-                          Seminario III: La cultura Escrita
-                          En Jóvenes y Adultos
-                        </li>
-
-                      </ul>
-
-                    </div>
-
+                    <div class="subjects"><ul>
+                      <li>Ética y Construcción de Ciudadanía</li>
+                      <li>Práctica IV y Residencia</li>
+                      <li>Problemáticas y Desafíos del Nivel Primario</li>
+                      <li>Educación Física en el Nivel Primario</li>
+                      <li>Educación Sexual Integral</li>
+                      <li>Trabajo de Campo</li>
+                      <li>Seminario III: La cultura Escrita En Jóvenes y Adultos</li>
+                    </ul></div>
                   </details>
 
                 </div>
-
 
                 <div class="program-meta">
-
-                  <div class="resolution">
-
-                    <strong>
-                      Marco normativo.
-                    </strong>
-
-                    Resolución Ministerial Provincial N.º 628/08
-                    y ampliatorias y/o modificatorias. Con validez
-                    nacional otorgada por Res. Min. 2373/12
-                    y Res. Min. Educ. 61/15.
-
+                  <div class="program-note">
+                    <strong>Marco normativo</strong>
+                    <span>
+                      Resolución Ministerial Provincial N.º 628/08 y ampliatorias y/o modificatorias.
+                      Con validez nacional otorgada por Res. Min. 2373/12 y Res. Min. Educ. 61/15.
+                    </span>
                   </div>
-
                 </div>
-
               </div>
-
             </article>
 
           </div>
-
         </div>
-
       </section>
 
     </main>
 
-
     <footer class="footer">
+      <div class="footer-inner wrap">
+        <div class="footer-copy">
+          <div class="eyebrow">Educación Superior · Córdoba</div>
+          <p>
+            Presentación web de los planes de estudio contenidos en la documentación institucional compartida.
+          </p>
+        </div>
 
-      <div class="footer-inner">
-
-        Educación Superior · Córdoba · Presentación web de los
-        planes de estudio contenidos en la documentación
-        institucional compartida.
-
+        <div class="footer-communication" aria-label="Departamento de Comunicación">
+          <span>Departamento de Comunicación</span>
+          <img
+            src="logo%20original.svg"
+            alt="Logo del Departamento de Comunicación"
+            class="communication-logo"
+          >
+        </div>
       </div>
-
     </footer>
 
   </div>
 
-
-  <!-- CONTENEDOR EXCLUSIVO PARA IMPRESIÓN -->
-
-  <div
-    id="print-sheet"
-    aria-hidden="true"
-  >
-    <div id="print-content"></div>
-  </div>
-
-
-  <!-- SOLO REFERENCIA AL ARCHIVO JS EXTERNO -->
+  <noscript>
+    <div class="noscript-message">
+      Esta página requiere JavaScript para seleccionar el profesorado y descargar el plan correspondiente.
+    </div>
+  </noscript>
 
   <script src="app.js" defer></script>
-
 </body>
 </html>
