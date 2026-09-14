@@ -1,713 +1,537 @@
 (function () {
   "use strict";
 
-  /*
-   * ==========================================
-   * CONFIGURACIÓN
-   * ==========================================
-   */
+  document.addEventListener("DOMContentLoaded", function () {
 
-  const VALID_CAREERS = new Set([
-    "inicial",
-    "primaria"
-  ]);
+    /* =========================================
+       CONFIGURACIÓN
+       ========================================= */
 
+    const CONFIG = {
+      inicial: {
+        pdf: "PLAN DE ESTUDIOS PEI.docx.pdf",
+        title: "Profesorado en Educación Inicial"
+      },
 
-  /*
-   * ==========================================
-   * ELEMENTOS
-   * ==========================================
-   */
-
-  const body = document.body;
-
-  const cards = Array.from(
-    document.querySelectorAll(
-      ".selector-card[data-career]"
-    )
-  );
-
-  const programs = Array.from(
-    document.querySelectorAll(
-      ".program"
-    )
-  );
-
-  const offerSection =
-    document.getElementById("oferta");
-
-  const sectionTitle =
-    document.getElementById("section-title");
-
-  const printSheet =
-    document.getElementById("print-sheet");
-
-  const printContent =
-    document.getElementById("print-content");
-
-
-  /*
-   * Carrera que está actualmente
-   * seleccionada para impresión.
-   */
-
-  let printCareer = null;
-
-
-  /*
-   * ==========================================
-   * UTILIDADES
-   * ==========================================
-   */
-
-  function isValidCareer(career) {
-    return VALID_CAREERS.has(career);
-  }
-
-
-  function getProgram(career) {
-
-    if (!isValidCareer(career)) {
-      return null;
-    }
-
-    return document.getElementById(
-      `program-${career}`
-    );
-  }
-
-
-  /*
-   * ==========================================
-   * SELECCIÓN DE PROFESORADO
-   * ==========================================
-   */
-
-  function setCareer(
-    career,
-    options = {}
-  ) {
-
-    const {
-      scroll = true
-    } = options;
-
-    const valid =
-      isValidCareer(career);
-
-
-    /*
-     * Estado global.
-     */
-
-    body.dataset.career =
-      valid
-        ? career
-        : "none";
-
-
-    /*
-     * Actualiza las cards.
-     */
-
-    cards.forEach((card) => {
-
-      const active =
-        valid &&
-        card.dataset.career === career;
-
-      card.setAttribute(
-        "aria-expanded",
-        String(active)
-      );
-
-      card.setAttribute(
-        "aria-current",
-        active
-          ? "true"
-          : "false"
-      );
-
-    });
-
-
-    /*
-     * Muestra un solo programa.
-     */
-
-    programs.forEach((program) => {
-
-      const active =
-        valid &&
-        program.id ===
-          `program-${career}`;
-
-      program.classList.toggle(
-        "is-active",
-        active
-      );
-
-
-      /*
-       * Cuando se abre un programa,
-       * abrimos inicialmente el primer año.
-       */
-
-      if (active) {
-
-        const details =
-          Array.from(
-            program.querySelectorAll(
-              "details"
-            )
-          );
-
-        details.forEach(
-          (detail, index) => {
-
-            detail.open =
-              index === 0;
-
-          }
-        );
-
+      primaria: {
+        pdf: "PLAN DE ESTUDIOS PEP.docx.pdf",
+        title: "Profesorado en Educación Primaria"
       }
-
-    });
-
-
-    /*
-     * Desplazamiento suave.
-     */
-
-    if (
-      valid &&
-      scroll &&
-      offerSection
-    ) {
-
-      window.requestAnimationFrame(() => {
-
-        offerSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-      });
-
-    }
-
-  }
+    };
 
 
-  /*
-   * ==========================================
-   * IMPRESIÓN
-   * ==========================================
-   *
-   * La impresión se hace mediante una copia
-   * temporal del programa seleccionado.
-   *
-   * De este modo no alteramos permanentemente
-   * la versión visible de la página.
-   */
+    /* =========================================
+       ELEMENTOS
+       ========================================= */
 
+    const body = document.body;
 
-  function preparePrintClone(career) {
+    const cards = Array.from(
+      document.querySelectorAll(
+        ".selector-card[data-career]"
+      )
+    );
 
-    if (!printContent) {
-      return null;
-    }
+    const programs = Array.from(
+      document.querySelectorAll(
+        ".program"
+      )
+    );
 
-    const source =
-      getProgram(career);
+    const logo = document.querySelector(
+      ".site-logo"
+    );
 
-    if (!source) {
-      return null;
-    }
-
-
-    /*
-     * Limpiar cualquier impresión anterior.
-     */
-
-    printContent.innerHTML = "";
-
-
-    /*
-     * Clonamos solamente el programa.
-     */
-
-    const clone =
-      source.cloneNode(true);
-
-
-    /*
-     * El clon no necesita ID porque
-     * solo existe para impresión.
-     */
-
-    clone.removeAttribute("id");
-
-
-    clone.classList.add(
-      "print-program"
+    const header = document.querySelector(
+      ".site-header"
     );
 
 
-    /*
-     * Nos aseguramos de que esté visible.
-     */
+    /* =========================================
+       ESTADO
+       ========================================= */
 
-    clone.style.display =
-      "block";
-
-
-    /*
-     * Para imprimir deben estar abiertos
-     * los cuatro años.
-     */
-
-    clone
-      .querySelectorAll("details")
-      .forEach((detail) => {
-
-        detail.open = true;
-
-      });
+    let activeCareer =
+      body.dataset.career || "none";
 
 
-    /*
-     * Añadimos el clon al contenedor
-     * exclusivo de impresión.
-     */
+    /* =========================================
+       UTILIDADES
+       ========================================= */
 
-    printContent.appendChild(
-      clone
-    );
-
-
-    return clone;
-  }
-
-
-  /*
-   * ==========================================
-   * AJUSTE A UNA SOLA PÁGINA
-   * ==========================================
-   *
-   * Área imprimible:
-   *
-   * A4:
-   * 210 × 297 mm
-   *
-   * Márgenes:
-   * 20 mm
-   *
-   * Resultado:
-   * 170 × 257 mm
-   *
-   * Medimos el contenido real y lo reducimos
-   * mediante transform: scale() si supera
-   * la altura disponible.
-   */
-
-  function fitPrintToOnePage() {
-
-    if (!printContent) {
-      return;
-    }
-
-
-    /*
-     * Estado inicial.
-     */
-
-    printContent.style.transform =
-      "scale(1)";
-
-    printContent.style.transformOrigin =
-      "top left";
-
-    printContent.style.width =
-      "170mm";
-
-
-    /*
-     * Forzar cálculo del layout.
-     */
-
-    void printContent.offsetHeight;
-
-
-    /*
-     * Altura natural del contenido.
-     */
-
-    const naturalHeight =
-      printContent.scrollHeight;
-
-
-    /*
-     * Altura física disponible.
-     */
-
-    const sheetHeight =
-      printSheet
-        ? printSheet.clientHeight
-        : 0;
-
-
-    if (
-      naturalHeight <= 0 ||
-      sheetHeight <= 0
-    ) {
-      return;
-    }
-
-
-    /*
-     * Escala necesaria.
-     *
-     * Nunca ampliamos.
-     */
-
-    const scale =
-      Math.min(
-        1,
-        sheetHeight /
-          naturalHeight
-      );
-
-
-    /*
-     * Aplicamos escala.
-     */
-
-    printContent.style.transform =
-      `scale(${scale})`;
-
-
-    /*
-     * Compensamos el ancho para que
-     * transform-origin funcione correctamente.
-     */
-
-    printContent.style.width =
-      `calc(170mm / ${scale})`;
-
-  }
-
-
-  /*
-   * ==========================================
-   * ABRIR MODO IMPRESIÓN
-   * ==========================================
-   */
-
-  function openPrintMode(career) {
-
-    if (!isValidCareer(career)) {
-      return;
-    }
-
-    if (!printSheet || !printContent) {
-      return;
-    }
-
-
-    /*
-     * Guardamos la carrera.
-     */
-
-    printCareer = career;
-
-
-    /*
-     * Activamos estado de impresión.
-     */
-
-    body.dataset.printing =
-      "true";
-
-    body.dataset.career =
-      career;
-
-
-    /*
-     * Preparamos copia.
-     */
-
-    const clone =
-      preparePrintClone(
+    function isValidCareer(career) {
+      return Object.prototype.hasOwnProperty.call(
+        CONFIG,
         career
       );
-
-
-    if (!clone) {
-
-      closePrintMode();
-
-      return;
     }
 
 
-    /*
-     * Esperamos a que el navegador
-     * termine de renderizar el clon.
-     *
-     * Dos frames dan mayor estabilidad
-     * en Chrome y navegadores basados
-     * en Chromium.
-     */
+    function getProgram(career) {
 
-    requestAnimationFrame(() => {
+      if (!isValidCareer(career)) {
+        return null;
+      }
 
-      requestAnimationFrame(() => {
-
-        fitPrintToOnePage();
-
-        /*
-         * Abrir diálogo de impresión.
-         */
-
-        window.print();
-
-      });
-
-    });
-
-  }
-
-
-  /*
-   * ==========================================
-   * CERRAR MODO IMPRESIÓN
-   * ==========================================
-   */
-
-  function closePrintMode() {
-
-    body.removeAttribute(
-      "data-printing"
-    );
-
-
-    /*
-     * Limpiar clon.
-     */
-
-    if (printContent) {
-
-      printContent.innerHTML =
-        "";
-
-      printContent.style.transform =
-        "";
-
-      printContent.style.width =
-        "";
-
-      printContent.style.transformOrigin =
-        "";
-
+      return document.getElementById(
+        "program-" + career
+      );
     }
 
 
-    /*
-     * Restaurar carrera.
-     */
+    /* =========================================
+       SELECCIÓN DE CARRERA
+       ========================================= */
 
-    if (
-      printCareer &&
-      isValidCareer(printCareer)
+    function selectCareer(
+      career,
+      shouldScroll = true
     ) {
 
-      setCareer(
-        printCareer,
-        {
-          scroll: false
-        }
-      );
-
-    }
-
-
-    printCareer = null;
-
-  }
-
-
-  /*
-   * ==========================================
-   * CLICK EN CARDS
-   * ==========================================
-   */
-
-  cards.forEach((card) => {
-
-    card.addEventListener(
-      "click",
-      () => {
-
-        const career =
-          card.dataset.career;
-
-        setCareer(
-          career
-        );
-
-      }
-    );
-
-  });
-
-
-  /*
-   * ==========================================
-   * ACCIONES INTERNAS
-   * ==========================================
-   */
-
-  document.addEventListener(
-    "click",
-    (event) => {
-
-      const action =
-        event.target.closest(
-          "[data-action]"
-        );
-
-
-      if (!action) {
+      if (!isValidCareer(career)) {
+        closeCareer(false);
         return;
       }
 
+      activeCareer = career;
 
-      const actionType =
-        action.dataset.action;
+      body.dataset.career =
+        career;
 
 
-      /*
-       * VOLVER
-       */
+      /* -----------------------------------------
+         Actualizar cards
+         ----------------------------------------- */
 
-      if (
-        actionType === "back"
-      ) {
+      cards.forEach(function (card) {
 
-        setCareer(
-          "none",
-          {
-            scroll: false
-          }
+        const isActive =
+          card.dataset.career === career;
+
+        card.setAttribute(
+          "aria-expanded",
+          String(isActive)
         );
 
+        card.setAttribute(
+          "aria-current",
+          isActive
+            ? "true"
+            : "false"
+        );
 
-        if (sectionTitle) {
+      });
 
-          sectionTitle.scrollIntoView({
+
+      /* -----------------------------------------
+         Mostrar únicamente el programa elegido
+         ----------------------------------------- */
+
+      programs.forEach(function (program) {
+
+        const isActive =
+          program.id ===
+          "program-" + career;
+
+        program.classList.toggle(
+          "is-active",
+          isActive
+        );
+
+        if (isActive) {
+
+          const details =
+            Array.from(
+              program.querySelectorAll(
+                "details"
+              )
+            );
+
+          /*
+           * Al abrir la carrera:
+           * mostrar inicialmente solo
+           * el primer año.
+           */
+
+          details.forEach(
+            function (detail, index) {
+              detail.open =
+                index === 0;
+            }
+          );
+
+        }
+
+      });
+
+
+      /* -----------------------------------------
+         Actualizar URL
+         ----------------------------------------- */
+
+      const hash =
+        career === "inicial"
+          ? "educacion-inicial"
+          : "educacion-primaria";
+
+
+      if (
+        window.location.hash !==
+        "#" + hash
+      ) {
+
+        history.replaceState(
+          null,
+          "",
+          "#" + hash
+        );
+
+      }
+
+
+      /* -----------------------------------------
+         Scroll suave
+         ----------------------------------------- */
+
+      if (shouldScroll) {
+
+        const target =
+          getProgram(career);
+
+        if (target) {
+
+          window.requestAnimationFrame(
+            function () {
+
+              target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+              });
+
+            }
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /* =========================================
+       CERRAR CARRERA
+       ========================================= */
+
+    function closeCareer(
+      shouldScroll = true
+    ) {
+
+      activeCareer =
+        "none";
+
+      body.dataset.career =
+        "none";
+
+
+      cards.forEach(function (card) {
+
+        card.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+        card.setAttribute(
+          "aria-current",
+          "false"
+        );
+
+      });
+
+
+      programs.forEach(function (program) {
+
+        program.classList.remove(
+          "is-active"
+        );
+
+      });
+
+
+      if (
+        window.location.hash
+      ) {
+
+        history.replaceState(
+          null,
+          "",
+          window.location.pathname +
+          window.location.search
+        );
+
+      }
+
+
+      if (shouldScroll) {
+
+        const offer =
+          document.getElementById(
+            "oferta"
+          );
+
+        if (offer) {
+
+          offer.scrollIntoView({
             behavior: "smooth",
             block: "start"
           });
 
         }
 
+      }
+
+    }
+
+
+    /* =========================================
+       DESCARGA DIRECTA DEL PDF
+       ========================================= */
+
+    function downloadPlan(
+      career
+    ) {
+
+      if (!isValidCareer(career)) {
         return;
       }
 
 
+      const config =
+        CONFIG[career];
+
+
       /*
-       * IMPRIMIR
+       * Nombre del archivo dentro
+       * del mismo proyecto de Vercel.
        */
 
-      if (
-        actionType === "print"
-      ) {
+      const filePath =
+        encodeURI(
+          config.pdf
+        );
 
-        const activeCareer =
-          body.dataset.career;
 
+      /*
+       * Crear enlace temporal.
+       */
+
+      const link =
+        document.createElement(
+          "a"
+        );
+
+
+      link.href =
+        filePath;
+
+      link.download =
+        config.pdf;
+
+      link.rel =
+        "noopener";
+
+      link.style.display =
+        "none";
+
+
+      document.body.appendChild(
+        link
+      );
+
+
+      /*
+       * Ejecutar descarga.
+       */
+
+      link.click();
+
+
+      /*
+       * Limpiar.
+       */
+
+      window.setTimeout(
+        function () {
+
+          link.remove();
+
+        },
+        300
+      );
+
+    }
+
+
+    /* =========================================
+       CLICK EN LAS CARDS
+       ========================================= */
+
+    cards.forEach(function (card) {
+
+      card.addEventListener(
+        "click",
+        function () {
+
+          const career =
+            card.dataset.career;
+
+          selectCareer(
+            career,
+            true
+          );
+
+        }
+      );
+
+    });
+
+
+    /* =========================================
+       BOTONES INTERNOS
+       ========================================= */
+
+    document.addEventListener(
+      "click",
+      function (event) {
+
+        const actionButton =
+          event.target.closest(
+            "[data-action]"
+          );
+
+
+        if (!actionButton) {
+          return;
+        }
+
+
+        const action =
+          actionButton.dataset.action;
+
+
+        /* -------------------------------------
+           VOLVER
+           ------------------------------------- */
 
         if (
-          isValidCareer(
-            activeCareer
-          )
+          action === "back"
         ) {
 
-          openPrintMode(
-            activeCareer
-          );
+          closeCareer(true);
+
+          return;
+        }
+
+
+        /* -------------------------------------
+           DESCARGAR / IMPRIMIR
+           -------------------------------------
+           
+           El botón visual puede seguir
+           llamándose "Imprimir plan",
+           pero ahora descarga el PDF.
+           ------------------------------------- */
+
+        if (
+          action === "print" ||
+          action === "download"
+        ) {
+
+          const career =
+            body.dataset.career;
+
+          if (
+            isValidCareer(career)
+          ) {
+
+            downloadPlan(
+              career
+            );
+
+          }
 
         }
 
       }
-
-    }
-  );
+    );
 
 
-  /*
-   * ==========================================
-   * EVENTO AFTERPRINT
-   * ==========================================
-   */
+    /* =========================================
+       SCROLL DEL HEADER
+       ========================================= */
 
-  window.addEventListener(
-    "afterprint",
-    () => {
+    function updateHeaderOnScroll() {
 
-      closePrintMode();
-
-    }
-  );
+      const scrolled =
+        window.scrollY > 40;
 
 
-  /*
-   * ==========================================
-   * RESIZE
-   * ==========================================
-   *
-   * Útil si el navegador recalcula dimensiones
-   * antes de lanzar realmente el diálogo.
-   */
+      body.classList.toggle(
+        "is-scrolled",
+        scrolled
+      );
 
-  window.addEventListener(
-    "resize",
-    () => {
 
-      if (
-        body.dataset.printing ===
-        "true"
-      ) {
+      if (header) {
 
-        fitPrintToOnePage();
+        header.classList.toggle(
+          "is-scrolled",
+          scrolled
+        );
+
+      }
+
+      if (logo) {
+
+        logo.classList.toggle(
+          "is-scrolled",
+          scrolled
+        );
 
       }
 
     }
-  );
 
 
-  /*
-   * ==========================================
-   * HASH / URL
-   * ==========================================
-   *
-   * Permite:
-   *
-   * #educacion-inicial
-   * #educacion-primaria
-   */
+    window.addEventListener(
+      "scroll",
+      updateHeaderOnScroll,
+      {
+        passive: true
+      }
+    );
 
-  window.addEventListener(
-    "hashchange",
-    () => {
+
+    /*
+     * Ejecutar una vez al cargar.
+     */
+
+    updateHeaderOnScroll();
+
+
+    /* =========================================
+       HASH DE LA URL
+       ========================================= */
+
+    function readHash() {
 
       const hash =
         window.location.hash
-          .replace("#", "")
-          .trim();
+          .replace(
+            "#",
+            ""
+          )
+          .trim()
+          .toLowerCase();
 
 
       if (
@@ -715,11 +539,9 @@
         "educacion-inicial"
       ) {
 
-        setCareer(
+        selectCareer(
           "inicial",
-          {
-            scroll: true
-          }
+          false
         );
 
         return;
@@ -731,119 +553,132 @@
         "educacion-primaria"
       ) {
 
-        setCareer(
+        selectCareer(
           "primaria",
-          {
-            scroll: true
-          }
+          false
         );
 
         return;
       }
 
 
-      if (!hash) {
+      closeCareer(false);
 
-        setCareer(
-          "none",
-          {
-            scroll: false
+    }
+
+
+    window.addEventListener(
+      "hashchange",
+      readHash
+    );
+
+
+    /* =========================================
+       TECLADO
+       ========================================= */
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+
+        /*
+         * Escape:
+         * cerrar programa.
+         */
+
+        if (
+          event.key ===
+          "Escape"
+        ) {
+
+          if (
+            isValidCareer(
+              activeCareer
+            )
+          ) {
+
+            closeCareer(true);
+
+          }
+
+          return;
+        }
+
+
+        /*
+         * Enter / Space sobre
+         * elementos interactivos personalizados.
+         */
+
+        const target =
+          event.target;
+
+
+        if (
+          target.classList &&
+          target.classList.contains(
+            "selector-card"
+          )
+        ) {
+
+          if (
+            event.key === "Enter" ||
+            event.key === " "
+          ) {
+
+            event.preventDefault();
+
+            target.click();
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       EVITAR DOBLE APERTURA DE DETAILS
+       ========================================= */
+
+    programs.forEach(function (program) {
+
+      const details =
+        Array.from(
+          program.querySelectorAll(
+            "details"
+          )
+        );
+
+
+      details.forEach(function (detail) {
+
+        detail.addEventListener(
+          "toggle",
+          function () {
+
+            /*
+             * La animación queda a cargo de CSS.
+             * Este listener existe para mantener
+             * el comportamiento estable sin
+             * modificar el contenido.
+             */
+
           }
         );
 
-      }
+      });
 
-    }
-  );
-
-
-  /*
-   * ==========================================
-   * CARGA INICIAL
-   * ==========================================
-   */
-
-  const initialHash =
-    window.location.hash
-      .replace("#", "")
-      .trim();
+    });
 
 
-  if (
-    initialHash ===
-    "educacion-inicial"
-  ) {
+    /* =========================================
+       INICIALIZACIÓN
+       ========================================= */
 
-    setCareer(
-      "inicial",
-      {
-        scroll: false
-      }
-    );
+    readHash();
 
-  }
-
-
-  if (
-    initialHash ===
-    "educacion-primaria"
-  ) {
-
-    setCareer(
-      "primaria",
-      {
-        scroll: false
-      }
-    );
-
-  }
-
-
-  /*
-   * ==========================================
-   * ATAJO CTRL/CMD + P
-   * ==========================================
-   */
-
-  document.addEventListener(
-    "keydown",
-    (event) => {
-
-      const isPrintShortcut =
-        (
-          event.ctrlKey ||
-          event.metaKey
-        ) &&
-        event.key.toLowerCase() ===
-          "p";
-
-
-      if (!isPrintShortcut) {
-        return;
-      }
-
-
-      const activeCareer =
-        body.dataset.career;
-
-
-      if (
-        !isValidCareer(
-          activeCareer
-        )
-      ) {
-        return;
-      }
-
-
-      event.preventDefault();
-
-
-      openPrintMode(
-        activeCareer
-      );
-
-    }
-  );
+  });
 
 })();
